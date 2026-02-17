@@ -1,0 +1,127 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+:root {
+  --background: 210 20% 99%;
+  --foreground: 220 18% 12%;
+  --card: 0 0% 100%;
+  --card-foreground: 220 18% 12%;
+  --primary: 221 48% 17%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 28% 95%;
+  --secondary-foreground: 220 22% 20%;
+  --muted: 210 24% 95%;
+  --muted-foreground: 220 10% 42%;
+  --accent: 210 30% 93%;
+  --accent-foreground: 220 22% 18%;
+  --destructive: 0 73% 50%;
+  --input: 220 16% 86%;
+  --border: 220 14% 88%;
+  --ring: 221 48% 30%;
+  --radius: 0.75rem;
+}
+
+.dark {
+  --background: 220 20% 8%;
+  --foreground: 220 20% 92%;
+  --card: 220 18% 11%;
+  --card-foreground: 220 20% 92%;
+  --primary: 213 65% 72%;
+  --primary-foreground: 222 42% 12%;
+  --secondary: 220 15% 18%;
+  --secondary-foreground: 220 22% 88%;
+  --muted: 220 14% 16%;
+  --muted-foreground: 220 10% 70%;
+  --accent: 220 14% 20%;
+  --accent-foreground: 220 22% 88%;
+  --destructive: 0 65% 56%;
+  --input: 220 12% 24%;
+  --border: 220 10% 24%;
+  --ring: 215 90% 70%;
+}
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: var(--font-manrope);
+  --font-mono: var(--font-jetbrains);
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+::selection {
+  background: hsl(var(--primary) / 0.22);
+}
+
+.prose {
+  color: hsl(var(--foreground));
+}
+
+.prose pre {
+  margin: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+.prose pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  font-size: 0.82rem;
+}
+
+.prose code::before,
+.prose code::after {
+  content: "";
+}
+
+.prose a {
+  color: hsl(var(--primary));
+  text-decoration: none;
+}
+
+.prose a:hover {
+  text-decoration: underline;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.prose th,
+.prose td {
+  border: 1px solid hsl(var(--border));
+  padding: 0.4rem 0.6rem;
+}
