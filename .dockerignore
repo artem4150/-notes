@@ -1,0 +1,21 @@
+# VCS / editor
+.git
+.gitignore
+.vscode
+.idea
+
+# Env / logs
+.env
+*.log
+
+# Frontend artifacts
+frontend/node_modules
+frontend/.next
+frontend/out
+
+# Backend artifacts
+backend/bin
+
+# OS junk
+.DS_Store
+Thumbs.db

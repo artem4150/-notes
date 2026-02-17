@@ -1,0 +1,57 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: notes-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-notes}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-notes}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    ports:
+      - "5432:5432"
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: notes-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PORT: 8080
+      DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-notes}?sslmode=disable
+      APP_PASSWORD: ${APP_PASSWORD}
+      SESSION_COOKIE_NAME: ${SESSION_COOKIE_NAME:-notes_session}
+      SESSION_TTL_HOURS: ${SESSION_TTL_HOURS:-168}
+      SESSION_COOKIE_SECURE: ${SESSION_COOKIE_SECURE:-false}
+      MIGRATIONS_DIR: /app/migrations
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        API_BACKEND_URL: http://backend:8080
+    container_name: notes-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      API_BACKEND_URL: http://backend:8080
+      NEXT_PUBLIC_SESSION_COOKIE_NAME: ${SESSION_COOKIE_NAME:-notes_session}
+    ports:
+      - "3000:3000"
+
+volumes:
+  pgdata:
